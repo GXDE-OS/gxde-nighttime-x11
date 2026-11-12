@@ -11,8 +11,8 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PROJECT_DEP_VERSION "6.8.0")
-set(QT_MIN_VERSION "6.11.0")
-set(KF6_MIN_VERSION "6.30.0")
+set(QT_MIN_VERSION "6.8.0")
+set(KF6_MIN_VERSION "6.13.0")
 set(KDE_COMPILERSETTINGS_LEVEL "5.82")
 
 find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
@@ -51,8 +51,8 @@ find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS
     I18n
 )
 
-ecm_set_disabled_deprecation_versions(QT 6.11.0
-    KF 6.26.0
+ecm_set_disabled_deprecation_versions(QT 6.8.0
+    KF 6.13.0
 )
 
 check_cxx_compiler_flag(-Wno-unused-parameter COMPILER_UNUSED_PARAMETER_SUPPORTED)

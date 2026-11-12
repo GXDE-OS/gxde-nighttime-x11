@@ -6,7 +6,14 @@
 
 #include "kdarklightschedule.h"
 
+#if __has_include(<KHolidays/SunEvents>)
 #include <KHolidays/SunEvents>
+using KNightTimeSunEvents = KHolidays::SunEvents;
+#else
+// KHolidays < 6.15 has no SunEvents; use the bundled copy.
+#include "compat/sunevents_p.h"
+using KNightTimeSunEvents = KNightTimeCompat::SunEvents;
+#endif
 
 #include <QBuffer>
 
@@ -417,7 +424,7 @@ std::optional<KDarkLightSchedule> KDarkLightSchedule::forecast(const QDateTime &
     cycles.reserve(cycleCount + 1);
 
     for (int day = -1; day < cycleCount; ++day) {
-        const KHolidays::SunEvents sunEvents(dateTime.addDays(day), latitude, longitude);
+        const KNightTimeSunEvents sunEvents(dateTime.addDays(day), latitude, longitude);
 
         const QDateTime civilDawn = sunEvents.civilDawn();
         if (!civilDawn.isValid()) {

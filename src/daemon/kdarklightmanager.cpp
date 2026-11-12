@@ -12,11 +12,26 @@
 #include "ktimeddarklightscheduler.h"
 
 #include <KSharedConfig>
+#ifdef KNIGHTTIME_COMPAT_SKEW_NOTIFIER
+#include "compat/ksystemclockskewnotifier.h"
+#else
 #include <KSystemClockSkewNotifier>
+#endif
 
 #include <chrono>
 
 using namespace std::chrono_literals;
+
+// SunriseStart/SunsetStart are String entries holding QTime::toString() (HH:mm:ss).
+static QTime sunriseStartTime(const KDarkLightSettings *settings)
+{
+    return QTime::fromString(settings->sunriseStart());
+}
+
+static QTime sunsetStartTime(const KDarkLightSettings *settings)
+{
+    return QTime::fromString(settings->sunsetStart());
+}
 
 static void migrateNightLightConfig(KDarkLightSettings *knighttimerc)
 {
@@ -39,8 +54,8 @@ static void migrateNightLightConfig(KDarkLightSettings *knighttimerc)
         keysToDelete << QStringLiteral("Mode");
 
         knighttimerc->setSource(KDarkLightSettings::Source::Times);
-        knighttimerc->setSunriseStart(QTime::fromString(nightLight.readEntry(QStringLiteral("MorningBeginFixed"), QStringLiteral("0600")), QStringLiteral("hhmm")));
-        knighttimerc->setSunsetStart(QTime::fromString(nightLight.readEntry(QStringLiteral("EveningBeginFixed"), QStringLiteral("1800")), QStringLiteral("hhmm")));
+        knighttimerc->setSunriseStart(QTime::fromString(nightLight.readEntry(QStringLiteral("MorningBeginFixed"), QStringLiteral("0600")), QStringLiteral("hhmm")).toString());
+        knighttimerc->setSunsetStart(QTime::fromString(nightLight.readEntry(QStringLiteral("EveningBeginFixed"), QStringLiteral("1800")), QStringLiteral("hhmm")).toString());
         knighttimerc->setTransitionDuration(nightLight.readEntry<int>(QStringLiteral("TransitionTime"), 30) * 60);
         knighttimerc->save();
     } else if (mode == QLatin1String("Automatic")) {
@@ -113,7 +128,7 @@ void KDarkLightManager::reconfigure()
             if (auto source = QGeoPositionInfoSource::createDefaultSource(parameters, this)) {
                 m_positionInfoSource.reset(source);
                 connect(m_positionInfoSource.get(), &QGeoPositionInfoSource::errorOccurred, this, [this]() {
-                    m_scheduler = std::make_unique<KTimedDarkLightScheduler>(m_settings->sunriseStart(), m_settings->sunsetStart(), m_settings->transitionDuration());
+                    m_scheduler = std::make_unique<KTimedDarkLightScheduler>(sunriseStartTime(m_settings.get()), sunsetStartTime(m_settings.get()), m_settings->transitionDuration());
                     reschedule();
                 });
                 connect(m_positionInfoSource.get(), &QGeoPositionInfoSource::positionUpdated, this, [this](const QGeoPositionInfo &update) {
@@ -138,14 +153,14 @@ void KDarkLightManager::reconfigure()
                 }
             }
 
-            m_scheduler = std::make_unique<KTimedDarkLightScheduler>(m_settings->sunriseStart(), m_settings->sunsetStart(), m_settings->transitionDuration());
+            m_scheduler = std::make_unique<KTimedDarkLightScheduler>(sunriseStartTime(m_settings.get()), sunsetStartTime(m_settings.get()), m_settings->transitionDuration());
         } else {
             m_scheduler = std::make_unique<KSolarDarkLightScheduler>(QGeoCoordinate(m_settings->manualLatitude(), m_settings->manualLongitude()));
         }
         break;
     }
     case KDarkLightSettings::Times:
-        m_scheduler = std::make_unique<KTimedDarkLightScheduler>(m_settings->sunriseStart(), m_settings->sunsetStart(), m_settings->transitionDuration());
+        m_scheduler = std::make_unique<KTimedDarkLightScheduler>(sunriseStartTime(m_settings.get()), sunsetStartTime(m_settings.get()), m_settings->transitionDuration());
         break;
     }
 

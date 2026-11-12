@@ -33,6 +33,12 @@ target_sources(knighttimed PRIVATE
     main.cpp
 )
 
+# KSystemClockSkewNotifier was added in KCoreAddons 6.15; bundle a fallback for older KF6.
+if (KF6CoreAddons_VERSION VERSION_LESS 6.15.0)
+    target_sources(knighttimed PRIVATE compat/ksystemclockskewnotifier.cpp)
+    target_compile_definitions(knighttimed PRIVATE KNIGHTTIME_COMPAT_SKEW_NOTIFIER)
+endif()
+
 target_link_libraries(knighttimed PRIVATE
     KNightTime
 

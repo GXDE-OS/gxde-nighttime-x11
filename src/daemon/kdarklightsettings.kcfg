@@ -34,11 +34,12 @@
     </group>
 
     <group name="Times">
-        <entry name="sunsetStart" key="SunsetStart" type="Time">
+        <!-- Stored as String (HH:mm:ss, same on-disk format as type="Time") so that KConfig < 6.15 works. -->
+        <entry name="sunsetStart" key="SunsetStart" type="String">
             <default>18:00:00</default>
         </entry>
 
-        <entry name="sunriseStart" key="SunriseStart" type="Time">
+        <entry name="sunriseStart" key="SunriseStart" type="String">
             <default>06:00:00</default>
         </entry>
 
