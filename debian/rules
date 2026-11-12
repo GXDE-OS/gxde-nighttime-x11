@@ -1,0 +1,18 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+%:
+	dh $@ --buildsystem=cmake+ninja
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		-DBUILD_TESTING=$(if $(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)),OFF,ON) \
+		-DCMAKE_BUILD_TYPE=None \
+		-DKDE_INSTALL_USE_QT_SYS_PATHS=ON
+
+override_dh_auto_test:
+	QT_QPA_PLATFORM=offscreen dh_auto_test --no-parallel
+
+override_dh_missing:
+	dh_missing --fail-missing

@@ -1,0 +1,6 @@
+gxde-nighttime-x11 (6.8.4-1) unstable; urgency=medium
+
+  * Initial release, based on KNightTime 6.8.4.
+  * Patch to be built on Debian Trixie with older version of KF6.
+
+ -- CharOfString <root@charofstring.cc>  Thu, 12 Nov 2026 16:30:09 -0600
