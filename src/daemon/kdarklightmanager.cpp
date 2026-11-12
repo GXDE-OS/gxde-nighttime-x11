@@ -33,9 +33,10 @@ static QTime sunsetStartTime(const KDarkLightSettings *settings)
     return QTime::fromString(settings->sunsetStart());
 }
 
+// gxde-kwin-x11 keeps its night light settings in gxde-kwin_x11rc rather than kwinrc.
 static void migrateNightLightConfig(KDarkLightSettings *knighttimerc)
 {
-    const KSharedConfig::Ptr kwinrc = KSharedConfig::openConfig(QStringLiteral("kwinrc"));
+    const KSharedConfig::Ptr kwinrc = KSharedConfig::openConfig(QStringLiteral("gxde-kwin_x11rc"));
     KConfigGroup nightLight(kwinrc.get(), QStringLiteral("NightColor"));
 
     QStringList keysToDelete{
@@ -83,7 +84,7 @@ static void migrateNightLightConfig(KDarkLightSettings *knighttimerc)
 KDarkLightManager::KDarkLightManager(QObject *parent)
     : QObject(parent)
     , m_dbusInterface(std::make_unique<KDarkLightManagerInterface>(this))
-    , m_settings(std::make_unique<KDarkLightSettings>(KSharedConfig::openConfig(QStringLiteral("knighttimerc"), KConfig::NoGlobals)))
+    , m_settings(std::make_unique<KDarkLightSettings>(KSharedConfig::openConfig(QStringLiteral("gxde-nighttime-x11rc"), KConfig::NoGlobals)))
     , m_state(std::make_unique<KDarkLightState>())
     , m_skewNotifier(std::make_unique<KSystemClockSkewNotifier>())
     , m_scheduleTimer(std::make_unique<QTimer>())
@@ -122,7 +123,7 @@ void KDarkLightManager::reconfigure()
     case KDarkLightSettings::Location: {
         if (m_settings->automaticLocation()) {
             const QVariantMap parameters{
-                {QStringLiteral("desktopId"), QStringLiteral("org.kde.knighttimed")},
+                {QStringLiteral("desktopId"), QStringLiteral("com.gxde.nighttime-x11d")},
             };
 
             if (auto source = QGeoPositionInfoSource::createDefaultSource(parameters, this)) {

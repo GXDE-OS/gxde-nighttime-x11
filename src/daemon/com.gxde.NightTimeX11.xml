@@ -5,9 +5,9 @@
 
     SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 -->
-<node name="/org/kde/NightTime/Manager">
+<node name="/com/gxde/NightTimeX11/Manager">
     <!--
-        org.kde.NightTime.Manager:
+        com.gxde.NightTimeX11.Manager:
         @short_description: Night time interface
 
         This interface provides sunrise and sunset times. It can be used to implement features such
@@ -25,7 +25,7 @@
         * evening-start (x): the unix timestamp (in milliseconds) of the time when evening starts
         * evening-end (x): the unix timestamp (in milliseconds) of the time when evening ends
     -->
-    <interface name="org.kde.NightTime.Manager">
+    <interface name="com.gxde.NightTimeX11.Manager">
         <!--
             Version:
 

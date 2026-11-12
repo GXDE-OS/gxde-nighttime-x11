@@ -32,9 +32,9 @@ KDarkLightScheduleSubscription::KDarkLightScheduleSubscription(QObject *parent)
     : QObject(parent)
 {
     auto bus = QDBusConnection::sessionBus();
-    bus.connect(QStringLiteral("org.kde.NightTime"), QStringLiteral("/org/kde/NightTime/Manager"), QStringLiteral("org.kde.NightTime.Manager"), QStringLiteral("Refreshed"), this, SLOT(OnRefreshed(QVariantMap)));
+    bus.connect(QStringLiteral("com.gxde.NightTimeX11"), QStringLiteral("/com/gxde/NightTimeX11/Manager"), QStringLiteral("com.gxde.NightTimeX11.Manager"), QStringLiteral("Refreshed"), this, SLOT(OnRefreshed(QVariantMap)));
 
-    m_daemonWatcher = std::make_unique<QDBusServiceWatcher>(QStringLiteral("org.kde.NightTime"), bus);
+    m_daemonWatcher = std::make_unique<QDBusServiceWatcher>(QStringLiteral("com.gxde.NightTimeX11"), bus);
     connect(m_daemonWatcher.get(), &QDBusServiceWatcher::serviceRegistered,
             this, &KDarkLightScheduleSubscription::OnDaemonRegistered);
     connect(m_daemonWatcher.get(), &QDBusServiceWatcher::serviceUnregistered,
@@ -46,7 +46,7 @@ KDarkLightScheduleSubscription::KDarkLightScheduleSubscription(QObject *parent)
 KDarkLightScheduleSubscription::~KDarkLightScheduleSubscription()
 {
     if (m_cookie) {
-        auto message = QDBusMessage::createMethodCall(QStringLiteral("org.kde.NightTime"), QStringLiteral("/org/kde/NightTime/Manager"), QStringLiteral("org.kde.NightTime.Manager"), QStringLiteral("Unsubscribe"));
+        auto message = QDBusMessage::createMethodCall(QStringLiteral("com.gxde.NightTimeX11"), QStringLiteral("/com/gxde/NightTimeX11/Manager"), QStringLiteral("com.gxde.NightTimeX11.Manager"), QStringLiteral("Unsubscribe"));
         message.setArguments({m_cookie.value()});
     }
 }
@@ -108,7 +108,7 @@ void KDarkLightScheduleSubscription::OnDaemonUnregistered()
 
 void KDarkLightScheduleSubscription::subscribe()
 {
-    auto message = QDBusMessage::createMethodCall(QStringLiteral("org.kde.NightTime"), QStringLiteral("/org/kde/NightTime/Manager"), QStringLiteral("org.kde.NightTime.Manager"), QStringLiteral("Subscribe"));
+    auto message = QDBusMessage::createMethodCall(QStringLiteral("com.gxde.NightTimeX11"), QStringLiteral("/com/gxde/NightTimeX11/Manager"), QStringLiteral("com.gxde.NightTimeX11.Manager"), QStringLiteral("Subscribe"));
     message.setArguments({QVariantMap()});
     auto pendingCall = QDBusConnection::sessionBus().asyncCall(message);
 
@@ -130,7 +130,7 @@ void KDarkLightScheduleSubscription::subscribe()
 
             self->OnSubscribed(reply.value());
         } else {
-            auto message = QDBusMessage::createMethodCall(QStringLiteral("org.kde.NightTime"), QStringLiteral("/org/kde/NightTime/Manager"), QStringLiteral("org.kde.NightTime.Manager"), QStringLiteral("Unsubscribe"));
+            auto message = QDBusMessage::createMethodCall(QStringLiteral("com.gxde.NightTimeX11"), QStringLiteral("/com/gxde/NightTimeX11/Manager"), QStringLiteral("com.gxde.NightTimeX11.Manager"), QStringLiteral("Unsubscribe"));
             message.setArguments({reply.value().value(QStringLiteral("Cookie"))});
             QDBusConnection::sessionBus().asyncCall(message);
         }

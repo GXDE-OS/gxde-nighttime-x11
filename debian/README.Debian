@@ -1,0 +1,23 @@
+gxde-nighttime-x11 for Debian
+-----------------------------
+
+This is KNightTime ported to the Qt 6.8 / KDE Frameworks 6.13 stack of
+GXDE 25. Every installed artifact uses a GXDE-specific name, so these packages
+can be installed next to the distribution knighttime, libknighttime0 and
+knighttime-dev packages, and both daemons can run at the same time:
+
+  upstream knighttime               gxde-nighttime-x11
+  -------------------               ------------------
+  libKNightTime.so.0                libgxde-nighttime-x11.so.0
+  find_package(KNightTime)          find_package(gxde-nighttime-x11)
+  target KNightTime                 target gxde-nighttime-x11::NightTime
+  include/KNightTime/               include/gxde-nighttime-x11/
+  libexec/knighttimed               libexec/gxde-nighttime-x11d
+  D-Bus org.kde.NightTime           D-Bus com.gxde.NightTimeX11
+  plasma-knighttimed.service        gxde-nighttime-x11d.service
+  knighttimerc, knighttimestaterc   gxde-nighttime-x11rc, gxde-nighttime-x11staterc
+
+The C++ API (class names and header names such as <KDarkLightScheduleProvider>)
+is unchanged, so consumers only need to switch the CMake package and target.
+On first start the daemon migrates the [NightColor] settings of
+gxde-kwin_x11rc, not those of kwinrc.

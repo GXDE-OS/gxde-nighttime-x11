@@ -1,0 +1,6 @@
+usr/lib/*/libexec/gxde-nighttime-x11d
+usr/lib/systemd/user/gxde-nighttime-x11d.service
+usr/share/applications/com.gxde.nighttime-x11d.desktop
+usr/share/dbus-1/interfaces/com.gxde.NightTimeX11.xml
+usr/share/dbus-1/services/com.gxde.NightTimeX11.service
+usr/share/qlogging-categories6/gxde-nighttime-x11.categories

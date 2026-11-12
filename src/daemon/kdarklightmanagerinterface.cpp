@@ -26,7 +26,7 @@ KDarkLightManagerInterface::KDarkLightManagerInterface(KDarkLightManager *manage
     m_serviceWatcher->setWatchMode(QDBusServiceWatcher::WatchForUnregistration);
     connect(m_serviceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &KDarkLightManagerInterface::OnServiceUnregistered);
 
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/org/kde/NightTime/Manager"), this, QDBusConnection::ExportScriptableContents);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/com/gxde/NightTimeX11/Manager"), this, QDBusConnection::ExportScriptableContents);
 }
 
 uint KDarkLightManagerInterface::version() const
@@ -78,7 +78,7 @@ void KDarkLightManagerInterface::OnScheduleChanged()
     };
 
     for (const QString &subscriber : subscribers) {
-        auto signal = QDBusMessage::createTargetedSignal(subscriber, QStringLiteral("/org/kde/NightTime/Manager"), QStringLiteral("org.kde.NightTime.Manager"), QStringLiteral("Refreshed"));
+        auto signal = QDBusMessage::createTargetedSignal(subscriber, QStringLiteral("/com/gxde/NightTimeX11/Manager"), QStringLiteral("com.gxde.NightTimeX11.Manager"), QStringLiteral("Refreshed"));
         signal.setArguments({data});
         QDBusConnection::sessionBus().send(signal);
     }

@@ -13,8 +13,8 @@
 int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("NightTime"));
-    app.setOrganizationDomain(QStringLiteral("kde.org"));
+    app.setApplicationName(QStringLiteral("gxde-nighttime-x11d"));
+    app.setOrganizationDomain(QStringLiteral("gxde.top"));
 
     KDarkLightManager daemon;
     daemon.reconfigure();

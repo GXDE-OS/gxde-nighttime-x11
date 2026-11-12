@@ -4,5 +4,5 @@
 # SPDX-License-Identifier: CC0-1.0
 
 $EXTRACTRC `find . -name \*.kcfg` >> rc.cpp || exit 11
-$XGETTEXT `find . -name \*.cpp` -o $podir/knighttimed.pot
+$XGETTEXT `find . -name \*.cpp` -o $podir/gxde-nighttime-x11d.pot
 rm -f rc.cpp

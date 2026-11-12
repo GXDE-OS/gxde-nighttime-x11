@@ -20,9 +20,9 @@ depends += \
 
 qhp.projects            = KNightTime
 
-qhp.KNightTime.file                = knighttime.qhp
-qhp.KNightTime.namespace           = org.kde.knighttime.$QT_VERSION_TAG
-qhp.KNightTime.virtualFolder       = knighttime
+qhp.KNightTime.file                = gxde-nighttime-x11.qhp
+qhp.KNightTime.namespace           = com.gxde.nighttime-x11.$QT_VERSION_TAG
+qhp.KNightTime.virtualFolder       = gxde-nighttime-x11
 qhp.KNightTime.indexTitle          = KNightTime
 qhp.KNightTime.indexRoot           =
 
@@ -32,4 +32,4 @@ qhp.KNightTime.subprojects.classes.indexTitle = KNightTime C++ Classes
 qhp.KNightTime.subprojects.classes.selectors = class fake:headerfile
 qhp.KNightTime.subprojects.classes.sortPages = true
 
-tagfile = knighttime.tags
+tagfile = gxde-nighttime-x11.tags

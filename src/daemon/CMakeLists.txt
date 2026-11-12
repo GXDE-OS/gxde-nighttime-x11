@@ -2,9 +2,9 @@
 #
 # SPDX-License-Identifier: BSD-3-Clause
 
-add_executable(knighttimed)
+add_executable(gxde-nighttime-x11d)
 
-kconfig_target_kcfg_file(knighttimed
+kconfig_target_kcfg_file(gxde-nighttime-x11d
     FILE kdarklightsettings.kcfg
     CLASS_NAME KDarkLightSettings
     GENERATE_MOC
@@ -12,7 +12,7 @@ kconfig_target_kcfg_file(knighttimed
     MUTATORS
 )
 
-kconfig_target_kcfg_file(knighttimed
+kconfig_target_kcfg_file(gxde-nighttime-x11d
     FILE kdarklightstate.kcfg
     CLASS_NAME KDarkLightState
     GENERATE_MOC
@@ -20,11 +20,11 @@ kconfig_target_kcfg_file(knighttimed
     MUTATORS
 )
 
-target_compile_definitions(knighttimed PRIVATE
-    -DTRANSLATION_DOMAIN=\"knighttimed\"
+target_compile_definitions(gxde-nighttime-x11d PRIVATE
+    -DTRANSLATION_DOMAIN=\"gxde-nighttime-x11d\"
 )
 
-target_sources(knighttimed PRIVATE
+target_sources(gxde-nighttime-x11d PRIVATE
     kdarklightmanager.cpp
     kdarklightmanagerinterface.cpp
     kdarklightscheduler.cpp
@@ -35,12 +35,12 @@ target_sources(knighttimed PRIVATE
 
 # KSystemClockSkewNotifier was added in KCoreAddons 6.15; bundle a fallback for older KF6.
 if (KF6CoreAddons_VERSION VERSION_LESS 6.15.0)
-    target_sources(knighttimed PRIVATE compat/ksystemclockskewnotifier.cpp)
-    target_compile_definitions(knighttimed PRIVATE KNIGHTTIME_COMPAT_SKEW_NOTIFIER)
+    target_sources(gxde-nighttime-x11d PRIVATE compat/ksystemclockskewnotifier.cpp)
+    target_compile_definitions(gxde-nighttime-x11d PRIVATE KNIGHTTIME_COMPAT_SKEW_NOTIFIER)
 endif()
 
-target_link_libraries(knighttimed PRIVATE
-    KNightTime
+target_link_libraries(gxde-nighttime-x11d PRIVATE
+    gxde-nighttime-x11
 
     Qt6::DBus
     Qt6::Positioning
@@ -51,22 +51,22 @@ target_link_libraries(knighttimed PRIVATE
     KF6::DBusAddons
 )
 
-install(FILES org.kde.NightTime.xml DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR})
-install(TARGETS knighttimed DESTINATION ${KDE_INSTALL_LIBEXECDIR})
+install(FILES com.gxde.NightTimeX11.xml DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR})
+install(TARGETS gxde-nighttime-x11d DESTINATION ${KDE_INSTALL_LIBEXECDIR})
 
 ecm_generate_dbus_service_file(
-    NAME org.kde.NightTime
-    EXECUTABLE "${KDE_INSTALL_FULL_LIBEXECDIR}/knighttimed"
-    SYSTEMD_SERVICE plasma-knighttimed.service
+    NAME com.gxde.NightTimeX11
+    EXECUTABLE "${KDE_INSTALL_FULL_LIBEXECDIR}/gxde-nighttime-x11d"
+    SYSTEMD_SERVICE gxde-nighttime-x11d.service
     DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR}
 )
 
 ecm_install_configured_files(
-   INPUT plasma-knighttimed.service.in
+   INPUT gxde-nighttime-x11d.service.in
    DESTINATION ${KDE_INSTALL_SYSTEMDUSERUNITDIR}
 )
 
 ecm_install_configured_files(
-    INPUT org.kde.knighttimed.desktop.in
+    INPUT com.gxde.nighttime-x11d.desktop.in
     DESTINATION ${KDE_INSTALL_APPDIR}
 )

@@ -1,6 +1,19 @@
 gxde-nighttime-x11 (6.8.4-1) unstable; urgency=medium
 
   * Initial release, based on KNightTime 6.8.4.
-  * Patch to be built on Debian Trixie with older version of KF6.
+  * Rename every installed artifact so that it can be installed next to the
+    distribution knighttime packages:
+    - library libgxde-nighttime-x11, CMake package gxde-nighttime-x11
+      (target gxde-nighttime-x11::NightTime), headers under
+      include/gxde-nighttime-x11;
+    - daemon gxde-nighttime-x11d, D-Bus name com.gxde.NightTimeX11,
+      systemd user unit gxde-nighttime-x11d.service;
+    - config gxde-nighttime-x11rc / gxde-nighttime-x11staterc, migrated from
+      the [NightColor] group of gxde-kwin_x11rc.
+  * Build against the Qt 6.8 / KDE Frameworks 6.13 stack of GXDE 25.5:
+    - bundle fallbacks for KHolidays::SunEvents and KSystemClockSkewNotifier,
+      which only exist in KDE Frameworks 6.15 and later;
+    - store SunriseStart/SunsetStart as String entries, using the same
+      on-disk format as the KConfig Time type.
 
  -- CharOfString <root@charofstring.cc>  Thu, 12 Nov 2026 16:30:09 -0600

@@ -11,7 +11,7 @@ License: GPL-2.0-only or GPL-3.0-only or LicenseRef-KDE-Accepted-GPL
 Files: src/*.cpp
        src/*.h
        src/daemon/*.kcfg
-       src/daemon/org.kde.NightTime.xml
+       src/daemon/com.gxde.NightTimeX11.xml
 Copyright: 2025, Vlad Zahorodnii <vlad.zahorodnii@kde.org>
 License: LGPL-2.1-only or LGPL-3.0-only or LicenseRef-KDE-Accepted-LGPL
 
@@ -26,7 +26,7 @@ License: LGPL-2.1-or-later
 
 Files: CMakeLists.txt
        */CMakeLists.txt
-       KNightTimeConfig.cmake.in
+       gxde-nighttime-x11Config.cmake.in
 Copyright: 2025, Vlad Zahorodnii <vlad.zahorodnii@kde.org>
 License: BSD-3-Clause
 
@@ -41,11 +41,11 @@ Files: .gitignore
        README.md
        src/Messages.sh
        src/daemon/Messages.sh
-       src/daemon/org.kde.knighttimed.desktop.in
-       src/daemon/plasma-knighttimed.service.in
+       src/daemon/com.gxde.nighttime-x11d.desktop.in
+       src/daemon/gxde-nighttime-x11d.service.in
        src/knighttime-index.qdoc
        src/knighttime.qdoc
-       src/knighttime.qdocconf
+       src/gxde-nighttime-x11.qdocconf
 Copyright: None
 License: CC0-1.0
 

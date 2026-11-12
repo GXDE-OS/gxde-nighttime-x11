@@ -21,7 +21,7 @@ Vcs-Browser: https://github.com/GXDE-OS/gxde-nighttime-x11
 Vcs-Git: https://github.com/GXDE-OS/gxde-nighttime-x11.git
 Rules-Requires-Root: no
 
-Package: knighttime
+Package: gxde-nighttime-x11
 Architecture: any
 Multi-Arch: foreign
 Depends:
@@ -35,15 +35,17 @@ Description: dark-light cycle scheduling service for GXDE
  used to implement features such as adjusting the screen color temperature
  based on time of day.
  .
- This is GXDE's build of KNightTime, ported to the Qt 6.8 and KDE Frameworks
- 6.13 stack of GXDE 25. It keeps the upstream and Debian package, library,
- D-Bus and CMake names so that consumers such as gxde-kwin-x11 can use it
- unchanged.
+ gxde-nighttime-x11 is GXDE's build of KNightTime for the Qt 6.8 and KDE
+ Frameworks 6.13 stack of GXDE 25. Its library, CMake package, include
+ directory, daemon, D-Bus name, systemd unit and configuration files use
+ GXDE-specific names so that it can be installed next to the distribution
+ knighttime packages.
  .
- This package contains the knighttimed D-Bus service (org.kde.NightTime).
- Automatic location needs geoclue and the Qt Positioning plugins.
+ This package contains the gxde-nighttime-x11d D-Bus service
+ (com.gxde.NightTimeX11). Automatic location needs geoclue and the Qt
+ Positioning plugins.
 
-Package: libknighttime0
+Package: libgxde-nighttime-x11-0
 Section: libs
 Architecture: any
 Multi-Arch: same
@@ -51,24 +53,27 @@ Depends:
  ${misc:Depends},
  ${shlibs:Depends},
 Recommends:
- knighttime (= ${binary:Version}),
+ gxde-nighttime-x11 (= ${binary:Version}),
 Description: dark-light cycle scheduling helpers for GXDE - shared library
  KNightTime provides helpers for scheduling the dark-light cycle. It can be
  used to implement features such as adjusting the screen color temperature
  based on time of day.
  .
- This is GXDE's build of KNightTime, ported to the Qt 6.8 and KDE Frameworks
- 6.13 stack of GXDE 25.
+ gxde-nighttime-x11 is GXDE's build of KNightTime for the Qt 6.8 and KDE
+ Frameworks 6.13 stack of GXDE 25. Its library, CMake package, include
+ directory, daemon, D-Bus name, systemd unit and configuration files use
+ GXDE-specific names so that it can be installed next to the distribution
+ knighttime packages.
  .
  This package contains the client library, which subscribes to schedule
- updates from the knighttimed service.
+ updates from the gxde-nighttime-x11d service.
 
-Package: knighttime-dev
+Package: libgxde-nighttime-x11-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
 Depends:
- libknighttime0 (= ${binary:Version}),
+ libgxde-nighttime-x11-0 (= ${binary:Version}),
  qt6-base-dev (>= 6.8.0~),
  ${misc:Depends},
 Description: dark-light cycle scheduling helpers for GXDE - development files
@@ -76,8 +81,11 @@ Description: dark-light cycle scheduling helpers for GXDE - development files
  used to implement features such as adjusting the screen color temperature
  based on time of day.
  .
- This is GXDE's build of KNightTime, ported to the Qt 6.8 and KDE Frameworks
- 6.13 stack of GXDE 25.
+ gxde-nighttime-x11 is GXDE's build of KNightTime for the Qt 6.8 and KDE
+ Frameworks 6.13 stack of GXDE 25. Its library, CMake package, include
+ directory, daemon, D-Bus name, systemd unit and configuration files use
+ GXDE-specific names so that it can be installed next to the distribution
+ knighttime packages.
  .
- This package contains the headers and CMake package for the libknighttime
- shared library.
+ This package contains the headers and the CMake package
+ (find_package(gxde-nighttime-x11), target gxde-nighttime-x11::NightTime).

@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: CC0-1.0
 
 [Unit]
-Description=KDE Night Time Service
+Description=GXDE Night Time Service
 PartOf=graphical-session.target
 
 [Service]
-ExecStart=@KDE_INSTALL_FULL_LIBEXECDIR@/knighttimed
-BusName=org.kde.NightTime
+ExecStart=@KDE_INSTALL_FULL_LIBEXECDIR@/gxde-nighttime-x11d
+BusName=com.gxde.NightTimeX11
 Slice=background.slice

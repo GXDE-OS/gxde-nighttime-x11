@@ -5,7 +5,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 set(PROJECT_VERSION "6.8.4")
-project(KNightTime VERSION ${PROJECT_VERSION})
+project(gxde-nighttime-x11 VERSION ${PROJECT_VERSION})
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -67,28 +67,28 @@ endif()
 
 add_subdirectory(src)
 
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KNightTime")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/gxde-nighttime-x11")
 
 write_basic_package_version_file(
-    "${CMAKE_CURRENT_BINARY_DIR}/KNightTimeConfigVersion.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/gxde-nighttime-x11ConfigVersion.cmake"
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY AnyNewerVersion
 )
 
 configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/KNightTimeConfig.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/KNightTimeConfig.cmake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/gxde-nighttime-x11Config.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/gxde-nighttime-x11Config.cmake"
     INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR}
 )
 
 install(
     FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/KNightTimeConfig.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/KNightTimeConfigVersion.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/gxde-nighttime-x11Config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/gxde-nighttime-x11ConfigVersion.cmake"
     DESTINATION "${CMAKECONFIG_INSTALL_DIR}" COMPONENT Devel
 )
 
-install(EXPORT KNightTimeTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KNightTimeTargets.cmake)
+install(EXPORT gxde-nighttime-x11Targets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE gxde-nighttime-x11Targets.cmake NAMESPACE gxde-nighttime-x11::)
 
 ki18n_install(po)
 

@@ -9,5 +9,5 @@ target_sources(monitor PRIVATE
 )
 
 target_link_libraries(monitor PRIVATE
-    KNightTime
+    gxde-nighttime-x11
 )
