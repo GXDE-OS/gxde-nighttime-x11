@@ -12,11 +12,6 @@
 #include "ktimeddarklightscheduler.h"
 
 #include <KSharedConfig>
-#ifdef KNIGHTTIME_COMPAT_SKEW_NOTIFIER
-#include "compat/ksystemclockskewnotifier.h"
-#else
-#include <KSystemClockSkewNotifier>
-#endif
 
 #include <chrono>
 

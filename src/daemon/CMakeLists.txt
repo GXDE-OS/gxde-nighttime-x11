@@ -33,12 +33,6 @@ target_sources(gxde-nighttime-x11d PRIVATE
     main.cpp
 )
 
-# KSystemClockSkewNotifier was added in KCoreAddons 6.15; bundle a fallback for older KF6.
-if (KF6CoreAddons_VERSION VERSION_LESS 6.15.0)
-    target_sources(gxde-nighttime-x11d PRIVATE compat/ksystemclockskewnotifier.cpp)
-    target_compile_definitions(gxde-nighttime-x11d PRIVATE KNIGHTTIME_COMPAT_SKEW_NOTIFIER)
-endif()
-
 target_link_libraries(gxde-nighttime-x11d PRIVATE
     gxde-nighttime-x11
 

@@ -13,8 +13,10 @@
 int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("gxde-nighttime-x11d"));
-    app.setOrganizationDomain(QStringLiteral("gxde.top"));
+    // KDBusService derives the bus name from the reversed organization domain and the
+    // application name, so these two must produce com.gxde.NightTimeX11.
+    app.setApplicationName(QStringLiteral("NightTimeX11"));
+    app.setOrganizationDomain(QStringLiteral("gxde.com"));
 
     KDarkLightManager daemon;
     daemon.reconfigure();

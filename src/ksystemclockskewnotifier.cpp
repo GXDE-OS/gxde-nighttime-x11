@@ -19,6 +19,9 @@
 #define TFD_TIMER_CANCEL_ON_SET (1 << 1)
 #endif
 
+namespace GxdeNightTime
+{
+
 KSystemClockSkewNotifier::KSystemClockSkewNotifier(QObject *parent)
     : QObject(parent)
 {
@@ -88,5 +91,7 @@ void KSystemClockSkewNotifier::handleTimerCancelled()
 
     Q_EMIT skewed();
 }
+
+} // namespace GxdeNightTime
 
 #include "moc_ksystemclockskewnotifier.cpp"

@@ -20,6 +20,7 @@ target_compile_definitions(gxde-nighttime-x11 PRIVATE
 target_include_directories(gxde-nighttime-x11
     PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
         "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/gxde-nighttime-x11/>"
 )
 
@@ -28,6 +29,31 @@ target_sources(gxde-nighttime-x11 PRIVATE
     kdarklightscheduleprovider.cpp
     kdarklightschedulesubscription.cpp
 )
+
+# KSystemClockSkewNotifier was added in KCoreAddons 6.15. On older KF6, ship a
+# fallback in this library so that the daemon and gxde-kwin_x11 can use it.
+if (KF6CoreAddons_VERSION VERSION_LESS 6.15.0)
+    set(GXDE_NIGHTTIME_X11_SKEW_NOTIFIER ON)
+else()
+    set(GXDE_NIGHTTIME_X11_SKEW_NOTIFIER OFF)
+endif()
+set(GXDE_NIGHTTIME_X11_SKEW_NOTIFIER ${GXDE_NIGHTTIME_X11_SKEW_NOTIFIER} PARENT_SCOPE)
+add_feature_info("SkewNotifierFallback" GXDE_NIGHTTIME_X11_SKEW_NOTIFIER
+    "Bundled KSystemClockSkewNotifier for KCoreAddons < 6.15")
+
+set(KNightTime_HEADER_NAMES
+    KDarkLightSchedule
+    KDarkLightScheduleProvider
+)
+set(KNightTime_LOWERCASE_HEADERS
+    kdarklightschedule.h
+    kdarklightscheduleprovider.h
+)
+if (GXDE_NIGHTTIME_X11_SKEW_NOTIFIER)
+    target_sources(gxde-nighttime-x11 PRIVATE ksystemclockskewnotifier.cpp)
+    list(APPEND KNightTime_HEADER_NAMES KSystemClockSkewNotifier)
+    list(APPEND KNightTime_LOWERCASE_HEADERS ksystemclockskewnotifier.h)
+endif()
 
 target_link_libraries(gxde-nighttime-x11
     PUBLIC
@@ -57,8 +83,7 @@ ecm_generate_qdoc(gxde-nighttime-x11 gxde-nighttime-x11.qdocconf)
 
 ecm_generate_headers(KNightTime_HEADERS
     HEADER_NAMES
-        KDarkLightSchedule
-        KDarkLightScheduleProvider
+        ${KNightTime_HEADER_NAMES}
     REQUIRED_HEADERS KCoreAddons_HEADERS
 )
 
@@ -66,8 +91,7 @@ install(
     FILES
         ${KNightTime_HEADERS}
         ${CMAKE_CURRENT_BINARY_DIR}/knighttime_export.h
-        kdarklightschedule.h
-        kdarklightscheduleprovider.h
+        ${KNightTime_LOWERCASE_HEADERS}
     DESTINATION ${KDE_INSTALL_INCLUDEDIR}/gxde-nighttime-x11 COMPONENT Devel
 )
 

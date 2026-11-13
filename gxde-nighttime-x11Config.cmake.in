@@ -9,4 +9,7 @@ find_dependency(Qt6Core "@QT_MIN_VERSION@")
 
 @PACKAGE_SETUP_KWIN_AUTOMOC_VARIABLES@
 
+# ON when this build ships its own KSystemClockSkewNotifier (KCoreAddons < 6.15).
+set(GXDE_NIGHTTIME_X11_SKEW_NOTIFIER @GXDE_NIGHTTIME_X11_SKEW_NOTIFIER@)
+
 include("${CMAKE_CURRENT_LIST_DIR}/gxde-nighttime-x11Targets.cmake")

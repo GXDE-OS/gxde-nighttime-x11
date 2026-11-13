@@ -14,5 +14,8 @@ override_dh_auto_configure:
 override_dh_auto_test:
 	QT_QPA_PLATFORM=offscreen dh_auto_test --no-parallel
 
+override_dh_makeshlibs:
+	dh_makeshlibs -V 'libgxde-nighttime-x11-0 (>= 6.8.4-2~)'
+
 override_dh_missing:
 	dh_missing --fail-missing

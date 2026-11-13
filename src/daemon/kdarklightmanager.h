@@ -9,6 +9,9 @@
 #include "kdarklightscheduler.h"
 
 #include <KConfigWatcher>
+// Provided by KCoreAddons >= 6.15, or by this library on older KF6. The
+// fallback is a using-declaration, so it cannot be forward declared.
+#include <KSystemClockSkewNotifier>
 
 #include <QGeoPositionInfoSource>
 #include <QTimer>
@@ -16,7 +19,6 @@
 class KDarkLightManagerInterface;
 class KDarkLightSettings;
 class KDarkLightState;
-class KSystemClockSkewNotifier;
 
 class KDarkLightManager : public QObject
 {
